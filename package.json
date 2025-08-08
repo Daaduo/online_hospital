@@ -36,7 +36,6 @@
     "d2-crud-plus": "^2.13.1",
     "d2-crud-x": "^2.13.1",
     "d2p-extends": "^2.13.1",
-    "dayjs": "^1.8.17",
     "el-phone-number-input": "^1.1.5"
   },
   "devDependencies": {
