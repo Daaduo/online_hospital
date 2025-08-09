@@ -72,7 +72,8 @@ Vue.use(d2CrudPlus, {
         }
       }
     }
-  }
+  },
+  starTip: false
 })
 
 // 安装扩展插件

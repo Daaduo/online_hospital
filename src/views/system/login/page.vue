@@ -72,7 +72,7 @@
               class="page-login--options"
               flex="main:justify cross:center">
               <span><d2-icon name="question-circle"/> 忘记密码</span>
-              <span>注册用户</span>
+              <router-link to="/register">注册用户</router-link>
             </p>
             <!-- quick login -->
             <el-button class="page-login--quick" size="default" type="info" @click="dialogVisible = true">
