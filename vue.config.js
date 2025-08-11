@@ -42,9 +42,13 @@ module.exports = {
     proxy: {
       '/api': {
         target: 'https://njht.jk.pakgif.cn/NJHT',
-        ws: true
+        ws: true,
+        changeOrigin: true,
+        // pathRewrite: { '^/api': '' },
+        secure: false
       }
     }
+    // logLevel: 'debug'
   },
   css: {
     loaderOptions: {

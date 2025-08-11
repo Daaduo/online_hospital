@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <!-- 背景渐变 -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#409EFF;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#73C0DE;stop-opacity:0.8"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5"/>
+      <feOffset dx="2" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 背景形状 -->
+  <rect x="0" y="0" width="800" height="400" rx="15" fill="url(#bgGradient)"/>
+  <circle cx="650" cy="100" r="80" fill="white" opacity="0.1"/>
+  <circle cx="150" cy="300" r="60" fill="white" opacity="0.1"/>
+
+  <!-- 医生和患者图标 -->
+  <g transform="translate(250, 180)" filter="url(#shadow)">
+    <!-- 医生 -->
+    <circle cx="-60" cy="-40" r="30" fill="white"/>
+    <path d="M-75,-40 L-45,-40 L-45,-10 L-75,-10 Z" fill="#333"/>
+    <path d="M-70,-10 C-70,5 -40,5 -40,-10" stroke="#333" stroke-width="2" fill="none"/>
+    <circle cx="-65" cy="-45" r="3" fill="#333"/>
+    <circle cx="-55" cy="-45" r="3" fill="#333"/>
+    <path d="M-65,-35 C-65,-32 -55,-32 -55,-35" stroke="#333" stroke-width="2" fill="none"/>
+
+    <!-- 患者 -->
+    <circle cx="60" cy="-30" r="25" fill="white"/>
+    <path d="M65,-30 C65,-15 55,-15 55,-30" stroke="#333" stroke-width="2" fill="none"/>
+    <circle cx="55" cy="-35" r="2" fill="#333"/>
+    <circle cx="65" cy="-35" r="2" fill="#333"/>
+    <path d="M55,-25 C55,-22 65,-22 65,-25" stroke="#333" stroke-width="1.5" fill="none"/>
+
+    <!-- 连接线 -->
+    <path d="M-30,-40 C0,-60 30,-60 60,-30" stroke="white" stroke-width="2" stroke-dasharray="5,5" fill="none"/>
+  </g>
+
+  <!-- 医疗图标 -->
+  <g transform="translate(550, 220)" filter="url(#shadow)">
+    <!-- 十字标志 -->
+    <rect x="-15" y="-15" width="30" height="30" rx="5" fill="white"/>
+    <rect x="-7" y="-20" width="14" height="40" fill="#409EFF"/>
+    <rect x="-20" y="-7" width="40" height="14" fill="#409EFF"/>
+  </g>
+
+  <!-- 健康记录图标 -->
+  <g transform="translate(150, 250)" filter="url(#shadow)">
+    <rect x="-25" y="-20" width="50" height="60" rx="5" fill="white"/>
+    <path d="M-20,-10 L20,-10 M-20,0 L20,0 M-20,10 L15,10 M-20,20 L10,20" stroke="#333" stroke-width="2" fill="none"/>
+  </g>
+
+  <!-- 花朵装饰元素 -->
+  <g transform="translate(700, 320)">
+    <circle cx="0" cy="0" r="10" fill="white" opacity="0.8"/>
+    <circle cx="0" cy="-15" r="5" fill="white" opacity="0.8"/>
+    <circle cx="10.6" cy="-10.6" r="5" fill="white" opacity="0.8"/>
+    <circle cx="15" cy="0" r="5" fill="white" opacity="0.8"/>
+    <circle cx="10.6" cy="10.6" r="5" fill="white" opacity="0.8"/>
+    <circle cx="0" cy="15" r="5" fill="white" opacity="0.8"/>
+    <circle cx="-10.6" cy="10.6" r="5" fill="white" opacity="0.8"/>
+    <circle cx="-15" cy="0" r="5" fill="white" opacity="0.8"/>
+    <circle cx="-10.6" cy="-10.6" r="5" fill="white" opacity="0.8"/>
+  </g>
+
+  <g transform="translate(100, 100)">
+    <circle cx="0" cy="0" r="8" fill="white" opacity="0.8"/>
+    <circle cx="0" cy="-12" r="4" fill="white" opacity="0.8"/>
+    <circle cx="8.5" cy="-8.5" r="4" fill="white" opacity="0.8"/>
+    <circle cx="12" cy="0" r="4" fill="white" opacity="0.8"/>
+    <circle cx="8.5" cy="8.5" r="4" fill="white" opacity="0.8"/>
+    <circle cx="0" cy="12" r="4" fill="white" opacity="0.8"/>
+    <circle cx="-8.5" cy="8.5" r="4" fill="white" opacity="0.8"/>
+    <circle cx="-12" cy="0" r="4" fill="white" opacity="0.8"/>
+    <circle cx="-8.5" cy="-8.5" r="4" fill="white" opacity="0.8"/>
+  </g>
+</svg>

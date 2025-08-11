@@ -23,7 +23,7 @@
           class="page-login--content-main"
           flex="dir:top main:center cross:center">
           <!-- logo -->
-          <img class="page-login--logo" src="../login/image/logo@2x.png">
+          <img class="page-login--logo" src="../login/image/mainLogo.png">
           <!-- form -->
           <div class="page-login--form">
             <el-card shadow="never">
@@ -125,7 +125,7 @@
 <script>
 import dayjs from 'dayjs'
 import localeMixin from '@/locales/mixin.js'
-import * as api from './api'
+import api from './api'
 export default {
   mixins: [
     localeMixin
@@ -221,11 +221,15 @@ export default {
   },
   methods: {
     getRoleList () {
-      this.$api.sysUser.SYS_ROLE_GET_PAGE({
+      // 获取角色列表并赋值给正确的变量
+      api.SYS_ROLE_GET_PAGE({
         pageNum: 1,
         pageSize: 1000
       }).then(ret => {
-        this.roleList = ret.data
+        this.roles = ret.data.map(role => ({
+          label: role.name,
+          value: role.id
+        }))
       })
     },
     refreshTime () {

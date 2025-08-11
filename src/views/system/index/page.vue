@@ -1,64 +1,104 @@
 <template>
   <d2-container class="page">
-    <d2-page-cover>
-      <d2-icon-svg class="logo" name="d2-admin"/>
-      <template slot="footer">
-        <div class="btn-group">
-          <span class="btn-group__btn" @click="$open('https://github.com/greper/d2-crud-plus')">d2-crud-plus</span> |
-          <span class="btn-group__btn" @click="$open('https://github.com/greper/d2-crud')">d2-crud-x</span>
-<!--          <span class="btn-group__btn" @click="$open('https://alibaba.github.io/ice/scaffold?type=vue')">飞冰</span> |-->
-<!--          <span class="btn-group__btn" @click="$open('https://juejin.im/user/57a48b632e958a006691b946/posts')">掘金</span> |-->
-<!--          <span class="btn-group__btn" @click="$open('https://daily.fairyever.com')">日报</span> |-->
-<!--          <el-popover :width="172" trigger="hover">-->
-<!--            <p class="d2-mt-0 d2-mb-10">D2Projects</p>-->
-<!--            <img src="./image/qr@2x.png" style="width: 172px;">-->
-<!--            <span slot="reference" class="btn-group__btn btn-group__btn&#45;&#45;link">-->
-<!--              <d2-icon name="weixin"/>-->
-<!--              微信公众号-->
-<!--            </span>-->
-<!--            <p style="font-size: 12px; margin-top: 0px; margin-bottom: 0px;">-->
-<!--              官方公众号，主要推送前端技术类文章、框架资源、学习教程，以及 D2 系列项目更新信息-->
-<!--            </p>-->
-<!--          </el-popover>-->
+    <!-- 欢迎信息 -->
+    <div class="welcome-container">
+      <div class="welcome-card">
+        <h1 class="welcome-title">
+          欢迎您! {{ info.name || "尊敬的用户" }} 登录系统
+        </h1>
+        <p class="welcome-subtitle">
+          在线医院管理系统 - 高效、便捷的医疗服务平台
+        </p>
+        <div class="actions">
+          <el-button type="primary" size="medium" @click="handleStart"
+            >开始使用</el-button
+          >
         </div>
-        <d2-badge/>
-        <d2-help-btn/>
-      </template>
-    </d2-page-cover>
+      </div>
+    </div>
   </d2-container>
 </template>
 
 <script>
-import D2HelpBtn from './components/d2-help-btn/index'
-import D2Badge from './components/d2-badge/index'
-import D2PageCover from './components/d2-page-cover/index'
+import { mapGetters, mapState } from 'vuex'
+
 export default {
-  components: {
-    D2HelpBtn,
-    D2Badge,
-    D2PageCover
+  name: 'SystemIndexPage',
+  components: {},
+  data () {
+    return {
+      coverImage: '/image/healthcare-banner.svg'
+    }
+  },
+  computed: {
+    ...mapGetters(['userInfo']),
+    ...mapState('d2admin/user', ['info']),
+    username () {
+      return this.userInfo && this.userInfo.name
+    }
+  },
+  methods: {
+    handleStart () {
+      this.$router.push('/system/dashboard')
+    },
+    handleHelp () {
+      this.$message('客服支持：400-123-4567')
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
 
-  .btn-group {
-    color: $color-text-placehoder;
-    font-size: 12px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    .btn-group__btn {
-      color: $color-text-sub;
-      &:hover {
-        color: $color-text-main;
-      }
-      &.btn-group__btn--link {
-        color: $color-primary;
-      }
-    }
-  }
+.welcome-container {
+  width: 100%;
+  // height: 100%;
+  height: calc(100% - 220px);
+}
 
+.welcome-card {
+  border-radius: 12px;
+  padding: 40px 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  background-image: url("/image/healthcare-banner.svg");
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+
+  text-align: center;
+}
+
+.logo {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 25px;
+  display: block;
+}
+
+.welcome-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.welcome-subtitle {
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
 }
 </style>

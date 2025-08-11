@@ -16,14 +16,14 @@
         flex="dir:top main:justify cross:stretch box:justify">
         <div class="page-login--content-header">
           <p class="page-login--content-header-motto">
-            时间是一切财富中最宝贵的财富
+
           </p>
         </div>
         <div
           class="page-login--content-main"
           flex="dir:top main:center cross:center">
           <!-- logo -->
-          <img class="page-login--logo" src="./image/logo@2x.png">
+          <img class="page-login--logo" src="./image/mainLogo.png">
           <!-- form -->
           <div class="page-login--form">
             <el-card shadow="never">
@@ -49,7 +49,7 @@
                     <i slot="prepend" class="fa fa-keyboard-o"></i>
                   </el-input>
                 </el-form-item>
-                <el-form-item prop="code">
+                <!-- <el-form-item prop="code">
                   <el-input
                     type="text"
                     v-model="formLogin.code"
@@ -58,12 +58,13 @@
                       <img class="login-code" src="./image/login-code.png">
                     </template>
                   </el-input>
-                </el-form-item>
+                </el-form-item> -->
                 <el-button
                   size="default"
                   @click="submit"
                   type="primary"
-                  class="button-login">
+                  class="button-login"
+                  :loading="loading">
                   登录
                 </el-button>
               </el-form>
@@ -74,33 +75,30 @@
               <span><d2-icon name="question-circle"/> 忘记密码</span>
               <router-link to="/register">注册用户</router-link>
             </p>
-            <!-- quick login -->
-            <el-button class="page-login--quick" size="default" type="info" @click="dialogVisible = true">
-              快速选择用户（测试功能）
-            </el-button>
+
           </div>
         </div>
         <div class="page-login--content-footer">
           <p class="page-login--content-footer-locales">
-            <a
+            <!-- <a
               v-for="language in $languages"
               :key="language.value"
               @click="onChangeLocale(language.value)">
               {{ language.label }}
-            </a>
+            </a> -->
           </p>
           <p class="page-login--content-footer-copyright">
-            Copyright
+            <!-- Copyright
             <d2-icon name="copyright"/>
             2018 D2 Projects 开源组织出品
             <a href="https://github.com/FairyEver">
               @FairyEver
-            </a>
+            </a> -->
           </p>
           <p class="page-login--content-footer-options">
-            <a href="#">帮助</a>
+            <!-- <a href="#">帮助</a>
             <a href="#">隐私</a>
-            <a href="#">条款</a>
+            <a href="#">条款</a> -->
           </p>
         </div>
       </div>
@@ -131,6 +129,8 @@ export default {
   ],
   data () {
     return {
+      loading: false,
+
       timeInterval: null,
       time: dayjs().format('HH:mm:ss'),
       // 快速选择用户
@@ -154,9 +154,9 @@ export default {
       ],
       // 表单
       formLogin: {
-        username: 'admin',
-        password: 'admin',
-        code: 'v9am'
+        username: '',
+        password: ''
+        // code: 'v9am'
       },
       // 表单校验
       rules: {
@@ -173,14 +173,14 @@ export default {
             message: '请输入密码',
             trigger: 'blur'
           }
-        ],
-        code: [
-          {
-            required: true,
-            message: '请输入验证码',
-            trigger: 'blur'
-          }
         ]
+        // code: [
+        //   {
+        //     required: true,
+        //     message: '请输入验证码',
+        //     trigger: 'blur'
+        //   }
+        // ]
       }
     }
   },
@@ -213,6 +213,7 @@ export default {
      */
     // 提交登录信息
     submit () {
+      this.loading = true
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           // 登录
@@ -224,9 +225,14 @@ export default {
           })
             .then(() => {
               // 重定向对象不存在则返回顶层路径
+              this.loading = false
               this.$router.replace(this.$route.query.redirect || '/')
             })
+            .catch(() => {
+              this.loading = false
+            })
         } else {
+          this.loading = false
           // 登录表单校验失败
           this.$message.error('表单校验失败，请检查')
         }
@@ -239,6 +245,7 @@ export default {
 <style lang="scss">
 .page-login {
   @extend %unable-select;
+  cursor: default;
   $backgroundColor: #F0F2F5;
   // ---
   background-color: $backgroundColor;

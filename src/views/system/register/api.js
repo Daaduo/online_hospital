@@ -7,7 +7,7 @@ export default {
   SYS_ROLE_GET_PAGE (data = {}) {
     // 接口请求
     return request({
-      url: '/Role/Search',
+      url: '/api/Role/Search',
       method: 'post',
       data
     })
@@ -19,7 +19,7 @@ export default {
   SYS_ROLE_GET_PAGE_BY_CONDITION (data = {}) {
     // 接口请求
     return request({
-      url: '/Role/SearchByNameOrCode',
+      url: '/api/Role/SearchByNameOrCode',
       method: 'post',
       data
     })
@@ -31,7 +31,7 @@ export default {
   SYS_ROLE_ADD (data = {}) {
     // 接口请求
     return request({
-      url: '/Role/CreateOrEditSave',
+      url: '/api/Role/CreateOrEditSave',
       method: 'post',
       data
     })
@@ -43,7 +43,7 @@ export default {
   SYS_ROLE_DELETE (id) {
     // 接口请求
     return request({
-      url: `/Role/DeleteById/${id}`,
+      url: `/api/Role/DeleteById/${id}`,
       method: 'delete'
     })
   },
@@ -54,7 +54,7 @@ export default {
   SYS_ROLE_GET_BY_ID (id) {
     // 接口请求
     return request({
-      url: `/Role/getRoleById/${id}`,
+      url: `/api/Role/getRoleById/${id}`,
       method: 'get'
     })
   }

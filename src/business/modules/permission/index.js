@@ -31,8 +31,10 @@ function registerRouterHook () {
     try {
       console.log('PM is enabled')
       const menuTreeRes = await getPermissions()
-      console.log('获取权限数据成功：', menuTreeRes)
-      const menuTree = menuTreeRes.data
+      // console.log('获取权限数据成功：', menuTreeRes)
+      const menuTree = menuTreeRes
+      // console.log('menuTree', menuTree)
+
       // 加载动态路由
       await store.dispatch('permission/generateRoutes', { menuTree })
       console.log('PM load success')

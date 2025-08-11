@@ -12,9 +12,12 @@ import router from './router'
 import { menuHeader, menuAside } from '@/menu'
 import { frameInRoutes } from '@/router/routes'
 
+import { D2pIconSelector } from 'd2p-extends'
+
 // d2-crud-plus 安装与初始化
 import './install'
-import './business/modules/permission'
+import './business/modules/permission' // 组件支持懒加载
+Vue.use(D2pIconSelector)
 // 核心插件
 Vue.use(d2Admin)
 

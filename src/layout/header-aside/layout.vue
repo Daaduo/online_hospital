@@ -11,8 +11,10 @@
           :class="{'logo-group': true, 'logo-transition': asideTransition}"
           :style="{width: asideCollapse ? asideWidthCollapse : asideWidth}"
           flex-box="0">
-          <img v-if="asideCollapse" :src="`${$baseUrl}image/theme/${themeActiveSetting.name}/logo/icon-only.png`">
-          <img v-else :src="`${$baseUrl}image/theme/${themeActiveSetting.name}/logo/all.png`">
+          <img v-if="asideCollapse" src="image/logo.png">
+
+          <img v-else src="@/views/system/login/image/mainLogo.png">
+
         </router-link>
         <div class="toggle-aside-btn" @click="handleToggleAside" flex-box="0">
           <d2-icon name="bars"/>
@@ -24,9 +26,9 @@
           <d2-header-search @click="handleSearchClick"/>
           <d2-header-log/>
           <d2-header-fullscreen/>
-          <d2-header-theme/>
+          <!-- <d2-header-theme/> -->
           <d2-header-size/>
-          <d2-header-locales/>
+          <!-- <d2-header-locales/> -->
           <d2-header-color/>
           <d2-header-user/>
         </div>
@@ -80,10 +82,8 @@ import d2MenuSide from './components/menu-side'
 import d2MenuHeader from './components/menu-header'
 import d2Tabs from './components/tabs'
 import d2HeaderFullscreen from './components/header-fullscreen'
-import d2HeaderLocales from './components/header-locales'
 import d2HeaderSearch from './components/header-search'
 import d2HeaderSize from './components/header-size'
-import d2HeaderTheme from './components/header-theme'
 import d2HeaderUser from './components/header-user'
 import d2HeaderLog from './components/header-log'
 import d2HeaderColor from './components/header-color'
@@ -99,10 +99,8 @@ export default {
     d2MenuHeader,
     d2Tabs,
     d2HeaderFullscreen,
-    d2HeaderLocales,
     d2HeaderSearch,
     d2HeaderSize,
-    d2HeaderTheme,
     d2HeaderUser,
     d2HeaderLog,
     d2HeaderColor

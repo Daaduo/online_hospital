@@ -31,7 +31,7 @@ Vue.use(d2CrudPlus, {
       data: dict.body,
       method: 'get'
     }).then(ret => {
-      return ret.data
+      return ret.resultObj
     })
   },
   commonOption () { // 公共配置
@@ -40,7 +40,9 @@ Vue.use(d2CrudPlus, {
         page: { // page接口返回的数据结构配置，
           request: {
             current: 'current',
-            size: 'size'
+            size: 'size',
+            parentId: 'parentId'
+
           },
           response: {
             current: 'current', // 当前页码 ret.data.current
@@ -53,6 +55,11 @@ Vue.use(d2CrudPlus, {
       },
       pageOptions: {
         compact: true
+      },
+      indexRow: { // 序号列,或者直接传true,不显示title，不居中
+        title: '序号',
+        align: 'center',
+        width: 100
       },
       options: {
         size: 'small'
@@ -75,6 +82,9 @@ Vue.use(d2CrudPlus, {
   },
   starTip: false
 })
+
+// 将d2CrudPlus挂载到Vue原型上，使其成为全局变量
+Vue.prototype.$d2CrudPlus = d2CrudPlus
 
 // 安装扩展插件
 Vue.use(D2pTreeSelector)
@@ -142,7 +152,7 @@ Vue.use(D2pUploader, {
     domain: 'http://d2p.file.veryreader.com'
   },
   form: {
-    action: process.env.VUE_APP_API + 'upload/form/upload',
+    action: process.env.VUE_APP_API + '/api/UpLoadFile/Upload',
     name: 'file'
   }
 })

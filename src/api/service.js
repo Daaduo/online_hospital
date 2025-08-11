@@ -24,6 +24,12 @@ function createService () {
     response => {
       // dataAxios 是 axios 返回数据中的 data
       const dataAxios = response.data
+      // console.log('dataAxios', dataAxios)
+      if (!dataAxios.isSuccessful) {
+        errorCreate(`${dataAxios.resultMsg}`)
+        return
+      }
+
       // 这个状态码是和后端约定的
       const { code } = dataAxios
       // 根据 code 进行判断
@@ -53,7 +59,11 @@ function createService () {
       const status = get(error, 'response.status')
       switch (status) {
         case 400: error.message = '请求错误'; break
-        case 401: error.message = '未授权，请登录'; break
+        case 401: error.message = '未授权，请登录'; util.cookies.remove('token')
+          // 导入 store 并调用 logout 方法
+          import('@/store').then(store => {
+            store.default.dispatch('d2admin/account/logout', { confirm: true })
+          }); break
         case 403: error.message = '拒绝访问'; break
         case 404: error.message = `请求地址出错: ${error.response.config.url}`; break
         case 408: error.message = '请求超时'; break
@@ -81,12 +91,15 @@ function createRequestFunction (service) {
     const token = util.cookies.get('token')
     const configDefault = {
       headers: {
-        Authorization: token,
         'Content-Type': get(config, 'headers.Content-Type', 'application/json')
       },
-      timeout: 5000,
-      baseURL: process.env.VUE_APP_API,
-      data: {}
+      timeout: 10000,
+      baseURL: process.env.VUE_APP_API
+      // data: {}
+    }
+    // 只在 token 存在时才添加 Authorization 头
+    if (token) {
+      configDefault.headers.Authorization = token
     }
     return service(Object.assign(configDefault, config))
   }
