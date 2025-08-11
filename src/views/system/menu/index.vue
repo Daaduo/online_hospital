@@ -44,7 +44,6 @@ import * as api from './api'
 import { crudOptions } from './crud'
 import { d2CrudPlus } from 'd2-crud-plus'
 
-import util from '@/libs/util'
 export default {
   name: 'menuList',
   mixins: [d2CrudPlus.crud],

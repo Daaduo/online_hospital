@@ -12,9 +12,9 @@
           <el-button size="small" type="primary" @click="addRow"
             ><i class="el-icon-plus" /> 新增</el-button
           >
-          <el-button size="small" type="warning" @click="resetPassword"
+          <!-- <el-button size="small" type="warning" @click="resetPassword"
             ><i class="el-icon-key" /> 重置密码</el-button
-          >
+          > -->
         </el-button-group>
         <crud-toolbar
           :search="null"
@@ -24,6 +24,12 @@
           @columns-filter-changed="handleColumnsFilterChanged"
         />
       </div>
+      <template slot="userRoleFormSlot" slot-scope="scope">
+        <el-select v-model="scope.form.userRole" placeholder="请选择角色" style="width: 100%;">
+          <el-option v-for="item in roleList" :key="item.id" :label="item.name" :value="item.name" />
+        </el-select>
+      </template>
+
     </d2-crud-x>
   </d2-container>
 </template>
@@ -32,11 +38,17 @@
 import * as api from './api'
 import { crudOptions } from './crud'
 import { d2CrudPlus } from 'd2-crud-plus'
+import { GetRoleByNameOrCode } from '@/views/system/role/api'
 export default {
   name: 'userList',
   mixins: [d2CrudPlus.crud],
   data () {
-    return {}
+    return {
+      roleList: []
+    }
+  },
+  mounted () {
+    this.getRoleList()
   },
   methods: {
     getCrudOptions () {
@@ -45,7 +57,17 @@ export default {
     pageRequest (query) {
       return api.Search(query)
     },
+    async getRoleList () {
+      const res = await GetRoleByNameOrCode({
+        page: 0,
+        rows: 1000
+      })
+      if (res.isSuccessful) {
+        this.roleList = res.resultObj.content.filter(item => item.name !== '超级管理员' || item.code !== 'Admin')
+      }
+    },
     addRequest (row) {
+      console.log('row', row)
       return api.CreateOrEditSave(row)
     },
     updateRequest (row) {
