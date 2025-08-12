@@ -62,7 +62,7 @@ function createService () {
         case 401: error.message = '未授权，请登录'; util.cookies.remove('token')
           // 导入 store 并调用 logout 方法
           import('@/store').then(store => {
-            store.default.dispatch('d2admin/account/logout', { confirm: true })
+            store.default.dispatch('d2admin/account/logout', { confirm: false })
           }); break
         case 403: error.message = '拒绝访问'; break
         case 404: error.message = `请求地址出错: ${error.response.config.url}`; break

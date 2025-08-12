@@ -16,11 +16,11 @@ export function SetUserCode (data) {
   })
 }
 
-export function ResetPassWord (id) {
+export function ResetPassWord (userId) {
   return request({
     url: '/api/User/ResetPassWord',
     method: 'post',
-    params: { id }
+    params: { userId }
   })
 }
 

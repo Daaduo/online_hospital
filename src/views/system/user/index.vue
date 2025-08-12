@@ -1,7 +1,7 @@
 <template>
   <d2-container>
     <template slot="header">用户管理</template>
-    <d2-crud-x ref="d2Crud" v-bind="_crudProps" v-on="_crudListeners">
+    <d2-crud-x ref="d2Crud" v-bind="_crudProps" v-on="_crudListeners" @reset-Password="resetPassword">
       <div slot="header">
         <crud-search
           ref="search"
@@ -9,12 +9,9 @@
           @submit="handleSearch"
         />
         <el-button-group>
-          <el-button size="small" type="primary" @click="addRow"
+          <el-button size="small" style="margin-right: 10px;" type="primary" @click="addRow"
             ><i class="el-icon-plus" /> 新增</el-button
           >
-          <!-- <el-button size="small" type="warning" @click="resetPassword"
-            ><i class="el-icon-key" /> 重置密码</el-button
-          > -->
         </el-button-group>
         <crud-toolbar
           :search="null"
@@ -30,6 +27,12 @@
         </el-select>
       </template>
 
+      <div slot="userRoleSearchSlot" slot-scope="scope">
+        <el-select v-model="scope.search.code" placeholder="请选择角色">
+          <el-option v-for="item in roleList" :key="item.id" :label="item.name" :value="item.id" />
+        </el-select>
+      </div>
+
     </d2-crud-x>
   </d2-container>
 </template>
@@ -44,7 +47,8 @@ export default {
   mixins: [d2CrudPlus.crud],
   data () {
     return {
-      roleList: []
+      roleList: [],
+      selectedRows: []
     }
   },
   mounted () {
@@ -55,7 +59,32 @@ export default {
       return crudOptions(this)
     },
     pageRequest (query) {
-      return api.Search(query)
+      console.log('query', query)
+      const params = {
+        ...query,
+        value: query.name || query.code
+      }
+      return api.Search(params)
+    },
+    doSelectionChange (selection) {
+      this.selectedRows = selection.map(item => item.id)
+      console.log('this.selectedRows', this.selectedRows)
+    },
+    resetPassword ({ row }) {
+      this.$confirm('确定要重置用户 ' + row.name + ' 的密码吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        api.ResetPassWord(row.id).then(res => {
+          if (res.isSuccessful) {
+            this.$message.success('密码重置成功，新密码为：123456')
+            this.doRefresh()
+          } else {
+            this.$message.error(res.message || '密码重置失败')
+          }
+        })
+      }).catch(() => {})
     },
     async getRoleList () {
       const res = await GetRoleByNameOrCode({
@@ -76,32 +105,6 @@ export default {
     },
     delRequest (row) {
       return api.DeleteUserById(row.id)
-    },
-    resetPassword () {
-      const selectedRows = this.$refs.d2Crud.getSelection()
-      if (!selectedRows || selectedRows.length === 0) {
-        this.$message.warning('请选择要重置密码的用户')
-        return
-      }
-      if (selectedRows.length > 1) {
-        this.$message.warning('只能选择一个用户进行密码重置')
-        return
-      }
-      const row = selectedRows[0]
-      this.$confirm('确定要重置用户 ' + row.name + ' 的密码吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        api.ResetPassWord(row.id).then(res => {
-          if (res.isSuccessful) {
-            this.$message.success('密码重置成功，新密码为：123456')
-            this.doRefresh()
-          } else {
-            this.$message.error(res.message || '密码重置失败')
-          }
-        })
-      }).catch(() => {})
     }
   }
 }

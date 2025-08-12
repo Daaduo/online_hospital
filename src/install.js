@@ -56,6 +56,10 @@ Vue.use(d2CrudPlus, {
       pageOptions: {
         compact: true
       },
+      selectionRow: { // 选择列
+        align: 'center',
+        width: 100
+      },
       indexRow: { // 序号列,或者直接传true,不显示title，不居中
         title: '序号',
         align: 'center',

@@ -23,12 +23,30 @@ export const crudOptions = (vm) => {
       total: 1
       // storage: true
     },
+    selectionRow: false,
+    rowHandle: { // 操作列
+      width: 380,
+      custom: [// 自定义按钮
+        {
+          // 配置同上
+          // 点击事件,需要在<d2-crud-x @custom-emit="yourHandle"/>
+          emit: 'reset-Password',
+          text: '重置密码', // 按钮文字， null= 取消文字，↓↓↓↓也可以传入一个方法↓↓↓↓
+          // text(scope){return 'xx'}
+          type: 'info', // 按钮类型
+          icon: 'el-icon-key', // 按钮图标，↓↓↓↓也可以传入一个方法↓↓↓↓
+          // icon(scope){return 'xx'}
+          size: 'small' // 按钮大小
+        }
+      ]
+    },
     columns: [
       {
         title: '用户名称',
         key: 'name',
         search: {
-          disabled: false
+          disabled: false,
+          placeholder: '请输入用户名称'
         },
         form: {
           rules: [
@@ -117,6 +135,10 @@ export const crudOptions = (vm) => {
         rules: [
           { required: true, message: '请选择角色' }
         ],
+        search: {
+          disabled: false,
+          
+        },
         form: {
           slot: true
         }
