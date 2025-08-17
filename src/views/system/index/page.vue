@@ -9,11 +9,11 @@
         <p class="welcome-subtitle">
           在线医院管理系统 - 高效、便捷的医疗服务平台
         </p>
-        <div class="actions">
+        <!-- <div class="actions">
           <el-button type="primary" size="medium" @click="handleStart"
             >开始使用</el-button
           >
-        </div>
+        </div> -->
       </div>
     </div>
   </d2-container>

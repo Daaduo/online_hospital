@@ -55,11 +55,3 @@ export function GetUserById (id) {
     params: { id }
   })
 }
-
-export function DeleteUserById (id) {
-  return request({
-    url: '/api/User/DeleteById',
-    method: 'delete',
-    params: { id }
-  })
-}

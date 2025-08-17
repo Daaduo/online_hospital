@@ -6,6 +6,19 @@ import { D2pAreaSelector, D2pFileUploader, D2pIconSelector, D2pTreeSelector, D2p
 // http请求
 import { request } from '@/api/service'
 
+// 将baseApi存储到Vuex中
+import store from '@/store'
+
+// 全局上传URL配置
+// 优先使用VUE_APP_API作为基础URL，与service.js中的配置保持一致
+// 如果VUE_APP_API不存在，则使用VUE_APP_BASE_API
+// 如果都不存在，则使用一个默认值
+const baseApi = process.env.VUE_APP_BASE_API || process.env.VUE_APP_API || '/'
+console.log(baseApi, 'baseApi')
+store.commit('d2admin/config/setBaseApi', baseApi)
+
+const UPLOAD_API_URL = baseApi + '/api/UpLoadFile/Upload'
+
 /**
  // vxe0
 import 'xe-utils'
@@ -102,7 +115,8 @@ Vue.use(D2pFullEditor, {
 Vue.use(D2pDemoExtend)
 Vue.use(D2pFileUploader)
 Vue.use(D2pUploader, {
-  defaultType: 'cos',
+  defaultType: 'form',
+
   cos: {
     domain: 'https://d2p-demo-1251260344.cos.ap-guangzhou.myqcloud.com',
     bucket: 'd2p-demo-1251260344',
@@ -111,8 +125,11 @@ Vue.use(D2pUploader, {
     secretKey: '', // 传了secretKey 和secretId 代表使用本地签名模式（不安全，生产环境不推荐）
     getAuthorization  (custom) { // 不传secretKey代表使用临时签名模式,此时此参数必传（安全，生产环境推荐）
       return request({
-        url: '/upload/cos/getAuthorization',
-        method: 'get'
+        url: '/api/UpLoadFile/Upload',
+        method: 'post',
+        params: {
+          firstPath: 'article'
+        }
       }).then(ret => {
         // 返回结构如下
         // ret.data:{
@@ -156,8 +173,25 @@ Vue.use(D2pUploader, {
     domain: 'http://d2p.file.veryreader.com'
   },
   form: {
-    action: process.env.VUE_APP_API + '/api/UpLoadFile/Upload',
-    name: 'file'
+    successHandle (ret) { // 需要将res.url 设置为url
+      console.log(ret, 'ret')
+      if (ret.data == null || ret.data === '') {
+        throw new Error('上传失败')
+      }
+      return { url: ret.data }
+    },
+    action: UPLOAD_API_URL,
+    name: 'file',
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+
+    },
+    data: {},
+    params: {
+      firstPath: 'article'
+    },
+    custom: { // buildKey，获取授权等接口中将会传入
+    }
   }
 })
 

@@ -64,7 +64,14 @@ const frameOut = [
     path: '/register',
     name: 'register',
     component: _import('system/register/page.vue')
+  },
+  // 大屏首页
+  {
+    path: '/home',
+    name: 'home',
+    component: _import('system/screen/index.vue')
   }
+
 ]
 
 /**

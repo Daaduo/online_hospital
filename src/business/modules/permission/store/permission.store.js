@@ -65,7 +65,8 @@ function formatRouter (parent, list) {
         meta: {
           title: item.name,
           auth: true,
-          cache: true
+          cache: true,
+          id: item.id
         }
       }
       children.push(newRouter)
@@ -166,7 +167,7 @@ const actions = {
 
       // console.log(routes)
 
-      console.log('accessedRoutes', accessedRoutes)
+      // console.log('accessedRoutes', accessedRoutes)
 
       // const permissions = formatPermissions(menuTree, []) // 从资源树中抽取权限code列表
       commit('setRoutes', { accessedRoutes }) // 将菜单和权限存储到vuex里面
@@ -176,7 +177,7 @@ const actions = {
         const exists = frameInRoutes[0].children.some(r => r.path === route.path)
         if (!exists) {
           frameInRoutes[0].children.push(route)
-          console.log('添加路由', route, frameInRoutes)
+          // console.log('添加路由', route, frameInRoutes)
         }
       })
 
@@ -184,7 +185,7 @@ const actions = {
       // 刷新路由系统
       router.options.routes = constantRoutes.concat(frameInRoutes)
       router.addRoutes(frameInRoutes)
-      console.log(frameInRoutes, 'frameInRoutes')
+      // console.log(frameInRoutes, 'frameInRoutes')
 
       // 使用已经包含动态路由的frameInRoutes来初始化页面
       commit('d2admin/page/init', frameInRoutes, { root: true })

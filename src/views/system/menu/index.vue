@@ -76,7 +76,7 @@ export default {
     },
     addRequest (row) {
       console.log(row, 'row')
-      row.parentId = row.parentId.join('')
+      row.parentId = row.parentId[row.parentId.length - 1]
       const obj = {
         ...row
       }

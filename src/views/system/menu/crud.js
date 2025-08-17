@@ -126,11 +126,7 @@ export const crudOptions = (vm) => {
         key: 'mlevel',
         width: 120,
         form: {
-          rules: [
-            { required: true, message: '请输入菜单等级' }
-          // { type: 'number', message: '请输入数字' }
-          ]
-          // disabled: true
+          disabled: true
         }
       },
       {
